@@ -1,15 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
+    <OutputType>library</OutputType>
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     <EnforceCodeStyleInBuild>True</EnforceCodeStyleInBuild>
     <LangVersion>preview</LangVersion>
-    <GenerateDocumentationFile>False</GenerateDocumentationFile>
-    <PublishAot>true</PublishAot>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
@@ -26,9 +24,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CppSharp.Runtime" Version="1.0.54.626" />
-    <PackageReference Include="CS-Script" Version="4.6.5" />
-    <PackageReference Include="log4net" Version="2.0.15" />
     <PackageReference Include="ppy.SDL2-CS" Version="1.0.82" />
     <PackageReference Include="StbiSharp" Version="1.2.1" />
     <PackageReference Include="Veldrid" Version="4.9.0" />

@@ -9,8 +9,10 @@ namespace GalE.Script
 {
     public abstract class ScriptBase
     {
-        internal ScriptBase()
-        {
-        }
+        public virtual void Init(GEngin engin)
+        {}
+
+        public virtual void Update(GEngin engin)
+        {}
     }
 }

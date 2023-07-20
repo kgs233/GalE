@@ -2,7 +2,6 @@
 
 using GalE.Util.Math;
 using GalE.Renderer;
-using System.Diagnostics;
 
 namespace GalE.Core;
 
@@ -17,6 +16,7 @@ public unsafe class GEnginWindow(
     private GEnginRenderer? EnginRenderer = null;
 
     internal IntPtr SDLWindow;
+    internal SDL_Event SDLevent;
     internal GEnginBase GEngin { get; private set; }
 
     public bool Runing { get; private set; } = false;
@@ -72,27 +72,24 @@ public unsafe class GEnginWindow(
         Inited.Init();
     }
 
-    public void Run()
+    public void Tick()
     {
         Inited.Check();
-        while (Runing)
+        while (Convert.ToBoolean(SDL_PollEvent(out SDLevent)))
         {
-            while (Convert.ToBoolean(SDL_PollEvent(out SDL_Event SDLevent)))
+            RandererEvent();
+            switch (SDLevent.type)
             {
-                RandererEvent();
-                switch (SDLevent.type)
-                {
-                    case SDL_EventType.SDL_QUIT:
-                        Runing = false;
-                        break;
+                case SDL_EventType.SDL_QUIT:
+                    Runing = false;
+                    break;
 
-                    default:
-                        break;
+                default:
+                    break;
                 }
-            }
         }
-        Dispose();
     }
+
 
     public void SetWindowTitle(string title) => SDL_SetWindowTitle(SDLWindow, title);
 

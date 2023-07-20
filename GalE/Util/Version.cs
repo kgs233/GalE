@@ -1,6 +1,4 @@
-﻿using Microsoft.CodeAnalysis.CSharp.Syntax;
-
-namespace GalE.Util;
+﻿namespace GalE.Util;
 
 public record Version(CoreVersion CoreVersion, string? Prelease = null, string? Build = null)
 {

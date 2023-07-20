@@ -7,6 +7,7 @@ using System.Diagnostics;
 
 using Vulkan;
 using static Vulkan.VulkanNative;
+using System.Runtime.InteropServices;
 
 namespace GalE;
 
@@ -56,25 +57,23 @@ public unsafe class GEnginVulkanRenderer : GEnginRenderer
         IntPtr[] SDLExtensions = new IntPtr[SDLExtensionCount];
         SDL_Vulkan_GetInstanceExtensions(enginWindow.SDLWindow, out SDLExtensionCount, SDLExtensions);
 
-        fixed(byte** vSDLExtensions = new byte*[SDLExtensionCount])
+        byte** vSDLExtensions = stackalloc byte*[(int)SDLExtensionCount];
+        for(int i = 0; i < SDLExtensionCount; i++)
         {
-            for(int i = 0; i < SDLExtensionCount; i++)
-            {
-                vSDLExtensions[i] = (byte*)SDLExtensions[i];
-            }
-
-            VkInstanceCreateInfo createInfo = new()
-            {
-                sType = VkStructureType.InstanceCreateInfo,
-                pApplicationInfo = &appInfo,
-                enabledExtensionCount = SDLExtensionCount,
-                ppEnabledExtensionNames = vSDLExtensions,
-                enabledLayerCount = 0
-            };
-
-            result = vkCreateInstance(&createInfo, null, out Instance);
-            Debug.Assert(result == VkResult.Success);
+            vSDLExtensions[i] = (byte*)SDLExtensions[i];
         }
+
+        VkInstanceCreateInfo createInfo = new()
+        {
+            sType = VkStructureType.InstanceCreateInfo,
+            pApplicationInfo = &appInfo,
+            enabledExtensionCount = SDLExtensionCount,
+            ppEnabledExtensionNames = vSDLExtensions,
+            enabledLayerCount = 0
+        };
+
+        result = vkCreateInstance(&createInfo, null, out Instance);
+        Debug.Assert(result == VkResult.Success);
     }
 
     private void CreateSurface()
@@ -88,7 +87,7 @@ public unsafe class GEnginVulkanRenderer : GEnginRenderer
         uint deviceCount = 0;
         vkEnumeratePhysicalDevices(Instance, ref deviceCount, null);
         Debug.Assert(deviceCount != 0);
-        fixed(VkPhysicalDevice* devices = new VkPhysicalDevice[deviceCount])
+        fixed(VkPhysicalDevice* devices = new VkPhysicalDevice[(int)deviceCount])
         {
             vkEnumeratePhysicalDevices(Instance, ref deviceCount, devices);
             PhysicalDevice = devices[0]; 

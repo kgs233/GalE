@@ -23,7 +23,6 @@ public class GEnginObject : IDisposable
         GEnginObject? enginObject = EnginObjectList.Where(enginObject => enginObject.ObjectID == id).FirstOrDefault();
         if(enginObject is null)
         {
-            GEnginMain.EnginLogger.Error("NotFound" + id);
             return null;
         }
         else

@@ -1,8 +1,4 @@
-﻿using System.Net;
-
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-
-namespace GalE.Util.Math;
+﻿namespace GalE.Util.Math;
 
 public class Vector2 
 {

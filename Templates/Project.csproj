@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
@@ -24,10 +24,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="CppSharp.Runtime" Version="1.0.54.626" />
+    <PackageReference Include="CS-Script" Version="4.6.5" />
+    <PackageReference Include="log4net" Version="2.0.15" />
     <PackageReference Include="ppy.SDL2-CS" Version="1.0.82" />
     <PackageReference Include="StbiSharp" Version="1.2.1" />
     <PackageReference Include="Veldrid" Version="4.9.0" />
     <PackageReference Include="Veldrid.ImageSharp" Version="4.9.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Program\" />
   </ItemGroup>
 
 </Project>

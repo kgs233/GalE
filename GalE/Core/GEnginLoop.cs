@@ -2,28 +2,43 @@
 
 public static class GEnginLoop
 {
-#pragma warning disable CS8618
-
-    private static GEnginBase GEngin;
-#pragma warning restore CS8618
-    public static bool IsRunning { get; private set; } = false;
+    private static GEnginBase Engin;
+    public static bool Running { get; private set; } = false;
 
     public static void Init()
     {
-        GEngin = new GEngin();
-        IsRunning = true;
-        GEngin.Init();
+        ScriptExecute.Init();
+        Engin = new GEngin();
+        Running = true;
+        Engin.Init();
     }
 
-    internal static void Update()
+    public static void Run()
     {
+        while(Running)
+        {
+            Engin.Update();
+            if(!Engin.GameBaseWindow.Runing)
+            {
+                Exit();
+                break;
+            }
+        }
     }
 
-    public static void Exit()
+    public static void Exit() => Exit(0);
+    public static void Exit(int exitArg)
     {
+        Engin.Dispose();
+        Environment.Exit(exitArg);
     }
+}
 
-    public static void GetGEngin(GEngin Engin)
+public static class GEnginMain
+{
+    public static void Main(string[] args)
     {
+        GEnginLoop.Init();
+        GEnginLoop.Run();
     }
 }

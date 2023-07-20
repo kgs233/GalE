@@ -7,6 +7,7 @@ public abstract class GEnginBase : GEnginObject, IDisposable
 {
     protected CheckInit Inited = new();
 
+    public bool Runing { get; protected set; }
     public abstract string GameName { get; set; }
     public abstract string GameOwner { get; set; }
     public abstract GEnginWindow GameBaseWindow { get; set; }
@@ -16,6 +17,5 @@ public abstract class GEnginBase : GEnginObject, IDisposable
     public string RunOSLanguage { get; } = System.Globalization.CultureInfo.CurrentCulture.Name;
 
     public abstract void Init();
-    public abstract void Run();
     public abstract void Update();
 }

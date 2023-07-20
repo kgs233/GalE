@@ -6,6 +6,7 @@ public record GEnginInitArg(string Name, string Owner, Util.Version Version);
 
 public class GEngin : GEnginBase
 {
+    
     public override string GameName { get; set; }
     public override string GameOwner { get; set; }
     public override GEnginWindow GameBaseWindow { get; set; }
@@ -28,17 +29,15 @@ public class GEngin : GEnginBase
     {
         GameBaseWindow.RandererEvent += Update;
         GameBaseWindow.Init(this);
+        ScriptExecute.OnInit(this);
         Inited.Init();
-    }
-
-    public override void Run()
-    {
-        Inited.Check();
-        GameBaseWindow.Run();
     }
 
     public override void Update()
     {
+        Inited.Check();
+        GameBaseWindow.Tick();
+        ScriptExecute.OnUpdate(this);
     }
 
     public new void Dispose()
@@ -46,5 +45,6 @@ public class GEngin : GEnginBase
         Inited.Check();
         GameBaseWindow.Dispose();
         base.Dispose();
+        Runing = false;
     }
 }
