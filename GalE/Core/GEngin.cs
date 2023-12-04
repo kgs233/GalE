@@ -1,6 +1,6 @@
-﻿using GalE.Core;
+﻿using GalE.Script;
 
-namespace GalE;
+namespace GalE.Core;
 
 public record GEnginInitArg(string Name, string Owner, Util.Version Version);
 
@@ -27,17 +27,17 @@ public class GEngin : GEnginBase
 
     public override void Init()
     {
-        GameBaseWindow.RandererEvent += Update;
+        ScriptExecute.ExeEvent(this, EnginEvent.Init);
         GameBaseWindow.Init(this);
-        ScriptExecute.OnInit(this);
         Inited.Init();
     }
 
     public override void Update()
     {
         Inited.Check();
-        GameBaseWindow.Tick();
-        ScriptExecute.OnUpdate(this);
+        ScriptExecute.ExeEvent(this, EnginEvent.Update);
+        GameBaseWindow.Update();
+        ScriptExecute.ExeEvent(this, EnginEvent.AfterUpdate);
     }
 
     public new void Dispose()

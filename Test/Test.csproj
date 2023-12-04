@@ -24,10 +24,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="ppy.SDL2-CS" Version="1.0.82" />
+    <PackageReference Include="ppy.SDL2-CS" Version="1.0.0" />
+    <PackageReference Include="Silk.NET" Version="2.17.1" />
+    <PackageReference Include="Silk.NET.Core" Version="2.17.1" />
+    <PackageReference Include="Silk.NET.Vulkan" Version="2.17.1" />
+    <PackageReference Include="Silk.NET.Vulkan.Extensions.EXT" Version="2.17.1" />
+    <PackageReference Include="Silk.NET.Vulkan.Extensions.KHR" Version="2.17.1" />
     <PackageReference Include="StbiSharp" Version="1.2.1" />
-    <PackageReference Include="Veldrid" Version="4.9.0" />
-    <PackageReference Include="Veldrid.ImageSharp" Version="4.9.0" />
   </ItemGroup>
 
 </Project>

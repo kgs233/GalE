@@ -10,14 +10,13 @@ public unsafe class GEnginWindow(
     bool vulkan = true, bool openGL = false,
     string title = "", Vector2? position = null, Vector2? size = null) : GEnginObject
 {
+    public IntPtr SDLWindow;
     public event Action RandererEvent;
+    public GEnginBase GEngin { get; private set; }
 
+    private SDL_Event SDLevent;
     private readonly CheckInit Inited = new();
     private GEnginRenderer? EnginRenderer = null;
-
-    internal IntPtr SDLWindow;
-    internal SDL_Event SDLevent;
-    internal GEnginBase GEngin { get; private set; }
 
     public bool Runing { get; private set; } = false;
 
@@ -72,12 +71,11 @@ public unsafe class GEnginWindow(
         Inited.Init();
     }
 
-    public void Tick()
+    public void Update()
     {
         Inited.Check();
         while (Convert.ToBoolean(SDL_PollEvent(out SDLevent)))
         {
-            RandererEvent();
             switch (SDLevent.type)
             {
                 case SDL_EventType.SDL_QUIT:

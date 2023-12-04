@@ -1,6 +1,6 @@
 ﻿using GalE.Core;
 
-namespace GalE;
+namespace GalE.Core;
 
 public class GEnginObject : IDisposable
 {

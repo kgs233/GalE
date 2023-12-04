@@ -1,8 +1,10 @@
-﻿namespace GalE.Core;
+﻿using GalE.Script;
+
+namespace GalE.Core;
 
 public static class GEnginLoop
 {
-    private static GEnginBase Engin;
+    private static GEngin Engin;
     public static bool Running { get; private set; } = false;
 
     public static void Init()

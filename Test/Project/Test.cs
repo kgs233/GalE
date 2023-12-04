@@ -8,6 +8,6 @@ public class Test : ScriptBase
 {
     public override void Init(GEngin engin)
     {
-        engin.GameBaseWindow.SetWindowSize(800, 900);
+        engin.GameBaseWindow = new(size: new(800, 900));
     }
 }

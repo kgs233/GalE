@@ -1,21 +1,31 @@
-﻿using GalE.Script;
+﻿using GalE.Core;
+using GalE.Script;
 using System.Reflection;
 
-namespace GalE;
+namespace GalE.Script;
 
-internal static class ScriptExecute
+public enum EnginEvent
+{
+    Init,
+    AfterInit,
+    Update,
+    AfterUpdate,
+    Exit,
+}
+
+public static class ScriptExecute
 {
     private readonly static Type Base = typeof(ScriptBase);
     private readonly static Type[] Types = Assembly.GetCallingAssembly().GetTypes();
 
     private static List<ScriptBase> ScriptList = new();
 
-    internal static void Init()
+    public static void Init()
     {
         foreach(Type type in Types)
         {
             Type? baseType = type.BaseType;
-            if (baseType != null)
+            while(baseType != null)
             {
                 if (baseType.Name == Base.Name)
                 {
@@ -26,24 +36,42 @@ internal static class ScriptExecute
                         ScriptBase? info = obj as ScriptBase;
                         ScriptList.Add(info);
                     }
+                    break;
+                }
+                else
+                {
+                    baseType = baseType.BaseType;
                 }
             }
         }
     }
 
-    internal static void OnInit(GEngin engin)
+    public static void ExeEvent(GEngin engin, EnginEvent @event)
     {
         foreach (var script in ScriptList)
         {
-            script.Init(engin);
-        }
-    }
+            switch(@event)
+            {
+                case EnginEvent.Init:
+                    script.Init(engin);
+                break;
 
-    internal static void OnUpdate(GEngin engin)
-    {
-        foreach (var script in ScriptList)
-        {
-            script.Update(engin);
+                case EnginEvent.AfterInit:
+                    script.AfterInit(engin);
+                break;
+
+                case EnginEvent.Update:
+                    script.Update(engin);
+                break;
+
+                case EnginEvent.AfterUpdate:
+                    script.AfterUpdate(engin);
+                break;
+
+                case EnginEvent.Exit:
+                    script.Exit(engin);
+                break;
+            }
         }
     }
 }
